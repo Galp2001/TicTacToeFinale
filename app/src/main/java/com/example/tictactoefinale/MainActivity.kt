@@ -47,9 +47,27 @@ class MainActivity : AppCompatActivity() {
             statusText.text="Player X's turn"
         }
 
+        checkWin()
         isPlayerX=!isPlayerX
 
 
+    }
+
+    private fun checkWin(){
+        val winningPositions = arrayOf(
+            intArrayOf(0, 1, 2), intArrayOf(3, 4, 5), intArrayOf(6, 7, 8), // Rows
+            intArrayOf(0, 3, 6), intArrayOf(1, 4, 7), intArrayOf(2, 5, 8), // Cols
+            intArrayOf(0, 4, 8), intArrayOf(2, 4, 6)                       // Diagonals
+        )
+        for (position in winningPositions) {
+            val (a, b, c) = position
+            if (buttons[a].text.isNotEmpty()&&buttons[a].text == buttons[b].text && buttons[a].text == buttons[c].text) {
+                gameActive=false
+                val winner=buttons[a].text
+                statusText.text="Player $winner has won!"
+                return
+            }
+        }
     }
 
     private fun resetGame() {
