@@ -48,7 +48,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         checkWin()
-        isPlayerX=!isPlayerX
+        // Only switch player if the game is still active (no win or tie)
+        if (gameActive) {
+            isPlayerX=!isPlayerX
+        }
 
 
     }
@@ -68,6 +71,13 @@ class MainActivity : AppCompatActivity() {
                 return
             }
         }
+
+        // If no winner and no empty cells, it's a tie
+        val anyEmpty = buttons.any { it.text.isEmpty() }
+        if (!anyEmpty) {
+            gameActive = false
+            statusText.text = "It's a tie!"
+        }
     }
 
     private fun resetGame() {
@@ -81,4 +91,3 @@ class MainActivity : AppCompatActivity() {
     }
 
 }
-
